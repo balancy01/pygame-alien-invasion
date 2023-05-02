@@ -30,6 +30,7 @@ class AlienInvation():
 			self._check_events()
 			self.ship.update()
 			self._update_bullets()
+			self._update_aliens()
 			self._update_screen()
 
 	def _check_events(self):
@@ -40,7 +41,7 @@ class AlienInvation():
 			elif event.type == pygame.KEYDOWN:
 				self._check_keydown_events(event)
 			elif event.type == pygame.KEYUP:
-				self._chek_keyup_events(event)			
+				self._check_keyup_events(event)			
 
 	def _check_keydown_events(self, event):
 		"""Реагирует на нажатие клавишь"""
@@ -59,7 +60,7 @@ class AlienInvation():
 			new_bullet = Bullet(self)
 			self.bullets.add(new_bullet)
 
-	def _chek_keyup_events(self, event):
+	def _check_keyup_events(self, event):
 		"""Реагирует на отпускание клавишь"""
 		if event.key == pygame.K_RIGHT:
 			self.ship.moving_right = False
@@ -76,6 +77,11 @@ class AlienInvation():
 			if bullet.rect.bottom <= 0:
 				self.bullets.remove(bullet)
 		#print(len(self.bullets))
+
+	def _update_aliens(self):
+		"""Обновляет позиции всех пришельцев во флоте"""
+		self._check_fleet_edges()
+		self.aliens.update()
 
 	def _create_fleet(self):
 		"""Создание флота вторжения"""
@@ -106,6 +112,19 @@ class AlienInvation():
 		alien.rect.x = alien.x
 		alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
 		self.aliens.add(alien)
+
+	def _check_fleet_edges(self):
+		"""Реагирует на достижение пришельцем края экрана"""
+		for alien in self.aliens.sprites():
+			if alien.check_edges():
+				self._change_fleet_direction()
+				break
+
+	def _change_fleet_direction(self):
+		"""Опускает весь флот и меняет направление флота"""
+		for alien in self.aliens.sprites():
+			alien.rect.y += self.settings.fleet_drop_speed
+		self.settings.fleet_direction *= -1
 
 	def _update_screen(self):
 		"""Обновление экрана"""
