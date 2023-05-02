@@ -4,6 +4,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvation():
 	"""Класс для управления ресурсами и поведением игры"""
@@ -19,6 +20,9 @@ class AlienInvation():
 
 		self.ship = Ship(self)
 		self.bullets = pygame.sprite.Group()
+		self.aliens = pygame.sprite.Group()
+
+		self._create_fleet()
 
 	def run_game(self):
 		"""Запуск основного циска игры"""
@@ -73,12 +77,19 @@ class AlienInvation():
 				self.bullets.remove(bullet)
 		#print(len(self.bullets))
 
+	def _create_fleet(self):
+		"""Создание флота вторжения"""
+		#Создание пришельца
+		alien = Alien(self)
+		self.aliens.add(alien)
+
 	def _update_screen(self):
 		"""Обновление экрана"""
 		self.screen.fill(self.settings.bg_color)
 		self.ship.blitme()
 		for bullet in self.bullets.sprites():
 			bullet.draw_bullet()
+		self.aliens.draw(self.screen)
 		#Отображение последнего прорисованного экрана
 		pygame.display.flip()
 
