@@ -68,16 +68,16 @@ class AlienInvation():
 			self.stats.reset_stats()
 			self.stats.game_active = True
 
-		#Указатель мыши скрывается
-		pygame.mouse.set_visible(False)
-		
-		#Очистка списка пришельцев и снарядов
-		self.aliens.empty()
-		self.bullets.empty()
+			#Указатель мыши скрывается
+			pygame.mouse.set_visible(False)
+			
+			#Очистка списка пришельцев и снарядов
+			self.aliens.empty()
+			self.bullets.empty()
 
-		#Создание нового флота и размещение корабля в центре
-		self._create_fleet()
-		self.ship.center_ship()
+			#Создание нового флота и размещение корабля в центре
+			self._create_fleet()
+			self.ship.center_ship()
 
 	def _check_keydown_events(self, event):
 		"""Реагирует на нажатие клавишь"""
