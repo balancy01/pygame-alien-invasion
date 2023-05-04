@@ -24,7 +24,7 @@ class AlienInvation():
 		self.settings.screen_height = self.screen.get_rect().height
 		pygame.display.set_caption("Alien Invasion")
 
-		#Создание экземпляра для хранения игровой статистики
+		#Создание экземпляров для хранения игровой статистики
 		#и панели результатов
 		self.stats = GameStats(self)
 		self.sb = Scoreboard(self)
@@ -73,6 +73,7 @@ class AlienInvation():
 			#Сброс игровой статистики
 			self.stats.reset_stats()
 			self.stats.game_active = True
+			self.sb.prep_score()
 
 			#Указатель мыши скрывается
 			pygame.mouse.set_visible(False)
@@ -128,6 +129,11 @@ class AlienInvation():
 		collisions = pygame.sprite.groupcollide(
 			self.bullets, self.aliens, True, True)
 		
+		if collisions:
+			for aliens in collisions.values():
+				self.stats.score += self.settings.alien_points * len(aliens)
+			self.sb.prep_score()
+
 		if not self.aliens:
 			#Уничтожение существующих снарядов и создание нового флота
 			self.bullets.empty()
