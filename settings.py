@@ -8,7 +8,7 @@ class Settings():
 		self.screen_height = 768
 		self.bg_color = (230, 230, 230)
 		#Настройки корабля
-		self.ship_limit = 3
+		self.ship_limit = 2
 
 		#Параметры снаряда
 		self.bullet_width = 3
