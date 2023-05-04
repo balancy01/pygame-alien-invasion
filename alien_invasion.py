@@ -19,7 +19,8 @@ class AlienInvation():
 		self.settings = Settings()
 		
 		#Создание игрового окна
-		self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+		self.screen = pygame.display.set_mode((self.settings.screen_width, 
+				self.settings.screen_height))
 		self.settings.screen_width = self.screen.get_rect().width
 		self.settings.screen_height = self.screen.get_rect().height
 		pygame.display.set_caption("Alien Invasion")
@@ -75,6 +76,7 @@ class AlienInvation():
 			self.stats.game_active = True
 			self.sb.prep_score()
 			self.sb.prep_level()
+			self.sb.prep_ships()
 
 			#Указатель мыши скрывается
 			pygame.mouse.set_visible(False)
@@ -205,8 +207,9 @@ class AlienInvation():
 		"""Обрабатывает столкновение корабля с пришельцем"""
 		if self.stats.ships_left > 0:
 
-			#Уменьшение ships_left
+			#Уменьшение ships_left и обновление картинок корабля
 			self.stats.ships_left -= 1
+			self.sb.prep_ships()
 			
 			#Очистка списков пришельцев и снарядов
 			self.aliens.empty()
